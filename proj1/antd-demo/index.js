@@ -13,7 +13,7 @@ import { LocaleProvider, DatePicker, message } from 'antd';
 import { Menu, Icon } from 'antd';
 import { Checkbox,Button  } from 'antd';
 import { Row, Col } from 'antd';
-import { Form, Input,Dropdown,Table, Divider, Tag, Card  } from 'antd';
+import { Form, Input,Dropdown,Table, Divider, Tag, Card, Avatar  } from 'antd';
 
 import { View, DataSet } from '@antv/data-set';
 import G2 from '@antv/g2';
@@ -72,6 +72,14 @@ const menu5 = (
     <Menu.Item key="2">完課率</Menu.Item>
     <Menu.Item key="3">學習時數</Menu.Item>
     <Menu.Item key="4">討論數</Menu.Item>
+    </Menu>
+);
+const menu6 = (
+  <Menu onClick={handleMenuClick}>
+    <Menu.Item key="1">所有使用者</Menu.Item>
+    <Menu.Item key="2">BA</Menu.Item>
+    <Menu.Item key="3">Sales</Menu.Item>
+    <Menu.Item key="4">RD</Menu.Item>
     </Menu>
 );
 const dataSource = [{
@@ -197,37 +205,51 @@ const dataSource = [{
 }];
 
 const columns = [{
-  title: ' ',
-  dataIndex: 'num',
-  key: 'num',
-},{
-  title: '學員',
-  dataIndex: 'people',
-  key: 'people',
-}, {
-  title: '群組',
-  dataIndex: 'group',
-  key: 'group',
-}, {
-  title: 'Email',
-  dataIndex: 'email',
-  key: 'email',
-}, {
-  title: '完課數',
-  dataIndex: 'lessonnum',
-  key: 'lessonnum',
-}, {
-  title: '完課率',
-  dataIndex: 'lessonrate',
-  key: 'lessonrate',
-}, {
-  title: '討論數',
-  dataIndex: 'discussnum',
-  key: 'discussnum',
-}, {
-  title: '學習時數',
-  dataIndex: 'lessonhour',
-  key: 'lessonhour',
+    title: ' ',
+    dataIndex: 'num',
+    key: 'num',
+  },{
+    title: '學員',
+    key: 'ava',
+    dataIndex: '',
+    render: () => (
+      <span>
+        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+      </span>
+    ),
+  },{
+    title: '',
+    dataIndex: 'people',
+    key: 'people',
+    render: text => (
+      <div style={{whiteSpace: 'pre-line'}}>
+      {text}
+      </div>
+    ),
+  },{
+    title: '群組',
+    dataIndex: 'group',
+    key: 'group',
+  }, {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+  }, {
+    title: '完課數',
+    dataIndex: 'lessonnum',
+    key: 'lessonnum',
+  }, {
+    title: '完課率',
+    dataIndex: 'lessonrate',
+    key: 'lessonrate',
+  }, {
+    title: '討論數',
+    dataIndex: 'discussnum',
+    key: 'discussnum',
+  }, {
+    title: '學習時數',
+    dataIndex: 'lessonhour',
+    key: 'lessonhour',
 }];
 
 function handleMenuClick(e) {
@@ -441,6 +463,7 @@ ReactDOM.render(<App3 />, document.getElementById('content1'));
 
 class App4 extends React.Component {
   render(){
+    reportOnclick();
     return(
       <Row>
         <Col span={16} offset={4}>
@@ -449,12 +472,29 @@ class App4 extends React.Component {
             <Col span={6} style={{fontSize: '20px',fontFamily: 'Microsoft JhengHei UI'}}>
             學員數 1,234 人
             </Col>
-            <Col span={18}>
-            <Form>
-              <FormItem>
-              <Input placeholder="搜尋" postfix={<Icon type="search" />} />
-              </FormItem>
-            </Form>
+            <Col span={6}>
+              <Input placeholder="搜尋" postfix={<Icon type="search" />} size={'large'} />
+            </Col>
+            <Col span={3} style={{marginLeft:'20px'}}>
+            <Dropdown overlay={menu5}>
+                <Button style={{ fontSize:'14px',width:'125px'}} size={'large'}>
+                  排序<Icon type="down" />
+                </Button>
+              </Dropdown>
+            </Col>
+            <Col span={3}style={{marginLeft:'20px'}}>
+              <Dropdown overlay={menu6}>
+                <Button style={{ fontSize:'14px',width:'125px'}} size={'large'}>
+                  所有使用者<Icon type="down" />
+                </Button>
+              </Dropdown>
+            </Col>
+            <Col span={3}style={{marginLeft:'20px'}}>
+              <Dropdown overlay={menu2}>
+                <Button style={{ fontSize:'14px',width:'125px'}} size={'large'}>
+                  今天<Icon type="down" />
+                </Button>
+              </Dropdown>
             </Col>
           </Row>
           <div style={{marginTop:'30px'}}>
